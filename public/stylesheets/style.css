@@ -1,0 +1,27 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  font-weight: 100;
+  background-attachment: fixed;
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  /* background-color: #132b50; */
+}
+.darkmode{
+  position:absolute;
+  z-index: 1;
+  top:5%;
+  right: 5%;
+}
+.all{
+  padding-top: 100px;
+  display: block;
+  position: relative;
+}

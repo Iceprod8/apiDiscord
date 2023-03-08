@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIO Discord</title>
+  <link rel="stylesheet" href="style">
+</head>
+
+<body>
+  <div class="all">
+    <section class="negroMode">
+      <div class="bg-white min-h-screen w-full justify-center flex flex-row items-center dark:bg-gray-900">
+        <div class="flex flex-row justify-between toggle">
+          <div class="darkmode"><label class="flex items-center cursor-pointer" for="dark-toggle">
+              <div class="relative"><input class="checkbox hidden" id="dark-toggle" type="checkbox" name="dark-mode" />
+                <div class="block border-gray-900 w-14 h-8 rounded-full border-[1px] dark:border-white"></div>
+                <div class="dot absolute left-1 top-1 bg-gray-800 w-6 h-6 rounded-full transition dark:bg-white"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="discord">
+          <section class="amiDiscord">
+            <ul id="messages" class='dark:text-white'></ul>
+          </section>
+          <section class="chatDiscord">
+            <form id="form" action="">
+              <input id="input" autocomplete="off" />
+              <button id="button">Send</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="script"></script>
+</body>
+
+</html>
