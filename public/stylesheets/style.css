@@ -180,3 +180,34 @@ LOGIN SIGN-IN
 .container .card .content .submit .button-submit-login:hover, .container .card .content .submit .button-submit-sign:hover{
   outline: 4px solid #ffffff40;
 }
+
+
+/*
+
+  EMAIL VERIF
+
+*/
+
+
+.verif-email-content {
+  display: block;
+  width: 60%;
+  margin: 30px auto;
+  background: #1f2029;
+  border-radius: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 36px;
+  letter-spacing: 10px;
+  box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, 0.1);
+}
+
+.verif-email-text{
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  letter-spacing: 10px;
+
+}

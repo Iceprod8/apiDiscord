@@ -19,11 +19,11 @@ let PORT = 3030;
 // Créer un transporteur SMTP
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 25,
+    port: 587,
     secure: false, // true pour les ports 465, false pour les autres ports
     auth: {
         user: "sio2discord123@gmail.com", // adresse email de l'expéditeur
-        pass: "sioDiscord123456789" // mot de passe de l'expéditeur
+        pass: "wglxikcujsfeqxtx" // mot de passe de l'expéditeur
     }
 });
 

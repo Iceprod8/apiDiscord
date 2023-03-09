@@ -33,8 +33,8 @@
           </label>
         </div>
       </div>
-      <section class="loginSign">
-        <div class="container">
+      <div id="loginSign" class="loginSign">
+        <section id="container" class="container">
           <input id="input" class="input" type="checkbox" />
           <label for="input" class="toggle">
             <span class="text sign-text dark:text-white">Sign Up</span>
@@ -49,6 +49,7 @@
             <span class="text log-text dark:text-white">Log In</span>
           </label>
           <div class="card">
+
             <div class="content sign">
               <h2 class="title">Sign Up</h2>
               <div class="fields">
@@ -90,7 +91,7 @@
                   <input type="password" id="password-sign" class="password-sign" placeholder="Password" />
                 </label>
               </div>
-
+              <div id="erreur-sign"></div>
               <div class="submit">
                 <button type="submit" id="button-submit-sign" class="button-submit-sign">Submit</button>
               </div>
@@ -127,15 +128,27 @@
               </div>
             </div>
           </div>
-        </div>
+        </section>
+        <section id="verif-email" class="container">
+          <div class="card">
+            <div class="content log">
+              <h2 class="title">Enter Your Verification Code</h2>
+              <div class="fields verif-email-all">
+                <div class="verif-email-content">
+                  <input class="verif-email-text" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <!-- pour savoir le prenom de la personne connecter EN COURS !!!!!!!!!!!!!!!!!!!!!!! -->
         <!-- <section id="nomDiscord" class="nomDiscord" style="display: none;">
             <label for="nom-input">Enter your name:</label>
             <input type="text" id="nom-input">
             <button id="nom-submit">Submit</button>
         </section> -->
-      </section>
-      <div class="discord">
+      </div>
+      <div id="discord" class="discord">
         <section class="amiDiscord">
           <ul id="utilisateur-list"></ul>
         </section>
