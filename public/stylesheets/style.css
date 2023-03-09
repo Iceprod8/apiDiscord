@@ -25,10 +25,14 @@ input:checked ~ .dot {
 
 
 .discord{
+  display: none;
   position: absolute;
   height: 100%;
   width: 100%;
+  visibility: hidden;
 }
+
+
 /*
 
 LOGIN SIGN-IN
@@ -40,16 +44,19 @@ LOGIN SIGN-IN
   --bg-secundary: #2A2B38;
 }
 
+*{
+  box-sizing:border-box;
+}
+
 .loginSign {
   display: flex;
   justify-content: center;
   align-items: center;
-
-
-  background: var(--bg);
   font-family: "Source Sans Pro", "Arial";
   padding: 1em;
   height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 .container {
@@ -99,6 +106,7 @@ LOGIN SIGN-IN
   position: relative;
   border-radius: 64px;
   outline: 2px solid var(--bg-secundary);
+  color: #dfdee5;
 }
 .container .toggle .icon .arrow {
   position: absolute;
@@ -117,6 +125,7 @@ LOGIN SIGN-IN
   padding: 0.5em;
   background: var(--bg-secundary);
   overflow: hidden;
+  color: #dfdee5;
 }
 .container .card .content {
   width: 100%;
@@ -143,7 +152,7 @@ LOGIN SIGN-IN
   margin: 0.5em 0;
   padding: 1em;
   border-radius: 32px;
-  background: var(--bg);
+  background: #1f2029;
 }
 .container .card .content .fields .field input {
   width: 100%;
@@ -158,7 +167,7 @@ LOGIN SIGN-IN
   text-align: center;
   margin: 1em 0;
 }
-.container .card .content .submit .button-submit {
+.container .card .content .submit .button-submit-login, .container .card .content .submit .button-submit-sign{
   cursor: pointer;
   width: 50%;
   border: none;
@@ -168,6 +177,6 @@ LOGIN SIGN-IN
   box-shadow: 0 6px 12px -4px #ffffff40;
   transition: all ease 0.125s;
 }
-.container .card .content .submit .button-submit:hover {
+.container .card .content .submit .button-submit-login:hover, .container .card .content .submit .button-submit-sign:hover{
   outline: 4px solid #ffffff40;
 }

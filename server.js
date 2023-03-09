@@ -3,12 +3,51 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const nodemailer = require("nodemailer");
+
+// connexion a la BDD pour les utilisateurs
+const uri = "mongodb+srv://AppSecurityPartner:EEpwNzf1LM6R95S0 @cluster0.bguu1an.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 const io = new Server(server);
 var path = require("path");
 const { Socket } = require('dgram');
 let PORT = 3030;
 
+
+// Créer un transporteur SMTP
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 25,
+    secure: false, // true pour les ports 465, false pour les autres ports
+    auth: {
+        user: "sio2discord123@gmail.com", // adresse email de l'expéditeur
+        pass: "sioDiscord123456789" // mot de passe de l'expéditeur
+    }
+});
+
+
+// Vérifier si l'email existe
+async function checkEmailExistence(email) {
+  // Définir le destinataire de l'email
+  const mailOptions = {
+      from: "sio2discord123@gmail.com",
+      to: email,
+      subject: "Vérification de l'adresse email",
+      text: "Veuillez ignorer ce message s'il vous plaît."
+  };
+
+  try {
+    // Envoyer l'email
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé : %s", info.messageId);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
 
 
 server.listen(PORT, () => {
@@ -48,6 +87,17 @@ app.get("/tailwindcss", (req, res) => {
 let users = {};
 
 io.on('connection', (socket) => {
+
+  socket.on('sign', (sign) => {
+    // Utilisation de la fonction pour vérifier si l'email existe
+    checkEmailExistence(sign.email).then(exists => {
+      if (exists) {
+        console.log("L'email existe.");
+      } else {
+        console.log("L'email n'existe pas.");
+      }
+    });
+  })
 
   console.log('User connected: ' + socket.id);
 

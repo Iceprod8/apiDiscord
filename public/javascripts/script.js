@@ -1,4 +1,3 @@
-
 // fonction pour le darkMode
 function darkModeListener() {
   document.querySelector("html").classList.toggle("dark");
@@ -9,24 +8,37 @@ document.querySelector("input[type='checkbox']#dark-toggle").addEventListener("c
 // gestion des envois et des receptions
 var socket = io();
 
-// gestion du pseudo
-const nomDialog = document.getElementById('nomDiscord');
-const nomInput = document.getElementById('nom-input');
-const nomSubmit = document.getElementById('nom-submit');
 
-socket.on('request name', () => {
-  // Afficher la boîte de dialogue pour demander le prénom
-  nomDialog.style.display = 'block';
+var loginEmail = document.getElementById('email-login');
+var loginPassword = document.getElementById('password-login');
+var loginSubmit = document.getElementById('button-submit-login');
 
-  // Envoyer le prénom de l'utilisateur lorsque le bouton est cliqué
-  nomSubmit.onclick = () => {
-    const nom = nomInput.value;
-    if (nom) {
-      socket.emit('name', nom);
-      nomDialog.style.display = 'none';
-    }
-  };
-});
+var signNom = document.getElementById('name-sign');
+var signEmail = document.getElementById('email-sign');
+var signPassword = document.getElementById('password-sign');
+var signSubmit = document.getElementById('button-submit-sign');
+
+
+loginSubmit.addEventListener('click', (e) =>{
+  e.preventDefault();
+  console.log(loginEmail.value)
+  const LoginObjet = {
+    email: loginEmail.value,
+    password: loginPassword.value
+  }
+})
+
+signSubmit.addEventListener('click', (e) =>{
+  e.preventDefault();
+  console.log(signEmail.value)
+  const SignObjet = {
+    pseudo: signNom.value,
+    email: signEmail.value,
+    password: signPassword.value
+  }
+
+  socket.emit('sign', SignObjet);
+})
 
 // gestion des utilisateurs en ligne
 const userList = document.getElementById('utilisateur-list');
