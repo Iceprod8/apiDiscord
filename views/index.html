@@ -3,11 +3,6 @@
 
 <head>
   <script src="tailwindcss"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,13 +17,13 @@
 
 <body>
   <div class="all">
-    <div class="bg-white min-h-screen w-full dark:bg-gray-900">
+    <div id="parentAll" class="min-h-screen w-full">
       <div class="flex flex-row justify-between toggle">
         <div class="darkmode">
           <label class="flex items-center cursor-pointer" for="dark-toggle">
             <div class="relative"><input class="checkbox hidden" id="dark-toggle" type="checkbox" name="dark-mode" />
-              <div class="block border-gray-900 w-14 h-8 rounded-full border-[1px] dark:border-white"></div>
-              <div class="dot absolute left-1 top-1 bg-gray-800 w-6 h-6 rounded-full transition dark:bg-white"></div>
+              <div class="block w-14 h-8 rounded-full border-[1px] borderButon"></div>
+              <div class="dot absolute left-1 top-1 w-6 h-6 rounded-full transition colorButon"></div>
             </div>
           </label>
         </div>
@@ -37,7 +32,7 @@
         <section id="container" class="container">
           <input id="input" class="input" type="checkbox" />
           <label for="input" class="toggle">
-            <span class="text sign-text dark:text-white">Sign Up</span>
+            <span class="text sign-text">Sign Up</span>
             <span class="icon">
               <svg class="arrow" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16"
                 height="32" width="32" xmlns="http://www.w3.org/2000/svg">
@@ -46,10 +41,9 @@
                 </path>
               </svg>
             </span>
-            <span class="text log-text dark:text-white">Log In</span>
+            <span class="text log-text">Log In</span>
           </label>
           <div class="card">
-
             <div class="content sign">
               <h2 class="title">Sign Up</h2>
               <div class="fields">
@@ -67,7 +61,6 @@
                   </div>
                   <input type="text" id="name-sign" class="name-sign" placeholder="Pseudo" />
                 </label>
-
                 <label class="field">
                   <div class="icon">
                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
@@ -76,9 +69,8 @@
                       <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
                     </svg>
                   </div>
-                  <input type="email" id="email-sign" class="email-sign" placeholder="Email" />
+                  <input type="email" id="email-sign" class="email-sign" placeholder="Email">
                 </label>
-
                 <label class="field">
                   <div class="icon">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
@@ -109,7 +101,6 @@
                   </div>
                   <input type="email" id="email-login" class="email-login" placeholder="Your Email" />
                 </label>
-
                 <label class="field">
                   <div class="icon">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
@@ -122,7 +113,7 @@
                   <input type="password" id="password-login" class="password-login" placeholder="Your Password" />
                 </label>
               </div>
-
+              <div id="erreur-login"></div>
               <div class="submit">
                 <button type="submit" id="button-submit-login" class="button-submit-login">Submit</button>
               </div>
@@ -131,33 +122,48 @@
         </section>
         <section id="verif-email" class="container">
           <div class="card">
-            <div class="content log">
+            <div class="content log" style="position: inherit;">
               <h2 class="title">Enter Your Verification Code</h2>
               <div class="fields verif-email-all">
-                <div class="verif-email-content">
-                  <input class="verif-email-text" type="text">
-                </div>
+                <label class="verif-email-content">
+                  <input style="text-transform: uppercase;" maxlength="6" id="verif-email-text" class="verif-email-text"
+                    type="text" placeholder="______" />
+                </label>
+                <div id="erreur-verif" class="erreur-verif"></div>
+              </div>
+              <div class="arrowBF">
+                <button type="button" id="back" class="retour">
+                  <svg style="fill: var(--color-text)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path
+                      d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                  </svg>
+                </button>
+                <button type="button" id="next" class="suivant">
+                  <svg style="fill: var(--color-text)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path
+                      d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
         </section>
-        <!-- pour savoir le prenom de la personne connecter EN COURS !!!!!!!!!!!!!!!!!!!!!!! -->
-        <!-- <section id="nomDiscord" class="nomDiscord" style="display: none;">
-            <label for="nom-input">Enter your name:</label>
-            <input type="text" id="nom-input">
-            <button id="nom-submit">Submit</button>
-        </section> -->
       </div>
       <div id="discord" class="discord">
         <section class="amiDiscord">
-          <ul id="utilisateur-list"></ul>
+          <ul id="utilisateur-list">
+            <li>
+              <button onclick="selectionChat('General')" class="button-general">General</button>
+            </li>
+          </ul>
         </section>
         <section class="chatDiscord">
-          <ul id="messages" class='dark:text-white'></ul>
-          <form id="form" action="">
-            <input id="input" autocomplete="off" />
-            <button id="button">Send</button>
-          </form>
+          <ul id="messages" class='chat-message'></ul>
+          <div class="chatButton">
+            <input id="input" class="input-message" autocomplete="off" />
+            <div class="la-barre"></div>
+            <button type="submit" class="button-message" onclick="mes()" id="button">Send</button>
+          </div>
         </section>
       </div>
     </div>

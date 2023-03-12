@@ -1,7 +1,30 @@
+:root {
+  --bg: #dfdee5;
+  --card: #c9c8ce;
+  --card-input: #b2b2b7;
+  --color-text: #1f2029;
+}
+
+.dark-mode {
+  --bg: #3f404c;
+  --card: #2A2B38;
+  --card-input: #1f2029;
+  --color-text: #dfdee5;
+}
+
+.borderButon {
+  border-color: var(--color-text) !important;
+}
+
+.colorButon {
+  background-color: var(--color-text) !important;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
+  background: var(--bg) !important;
 }
 
 body {
@@ -11,25 +34,33 @@ body {
   background-attachment: fixed;
 }
 
-input:checked ~ .dot {
+input::placeholder {
+  color: var(--color-text) !important;
+  opacity: 0.8 !important;
+}
+
+input:checked~.dot {
   transform: translateX(100%);
   /* background-color: #132b50; */
 }
 
-.darkmode{
-  position:absolute;
+.darkmode {
+  position: absolute;
   z-index: 1;
-  top:5%;
+  top: 5%;
   right: 5%;
 }
 
 
-.discord{
-  display: none;
+.discord {
   position: absolute;
   height: 100%;
   width: 100%;
-  visibility: hidden;
+  display: flex;
+  font-family: "Source Sans Pro", "Arial";
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
 }
 
 
@@ -39,13 +70,8 @@ LOGIN SIGN-IN
 
 */
 
-
-:root {
-  --bg-secundary: #2A2B38;
-}
-
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
 .loginSign {
@@ -69,27 +95,34 @@ LOGIN SIGN-IN
   align-items: center;
   position: relative;
 }
+
 .container .input {
   display: none;
 }
-.container .input:not(:checked) ~ .card .sign {
+
+.container .input:not(:checked)~.card .sign {
   left: 0;
   z-index: 1;
 }
-.container .input:not(:checked) ~ .card .log {
+
+.container .input:not(:checked)~.card .log {
   left: 100%;
 }
-.container .input:checked ~ .toggle .icon .arrow {
+
+.container .input:checked~.toggle .icon .arrow {
   left: 50%;
   transform: rotateY(180deg);
 }
-.container .input:checked ~ .card .sign {
+
+.container .input:checked~.card .sign {
   left: -100%;
 }
-.container .input:checked ~ .card .log {
+
+.container .input:checked~.card .log {
   left: 0;
   z-index: 1;
 }
+
 .container .toggle {
   cursor: pointer;
   display: flex;
@@ -97,7 +130,9 @@ LOGIN SIGN-IN
   align-items: center;
   gap: 1em;
   margin: 1em 0;
+  color: var(--color-text);
 }
+
 .container .toggle .icon {
   width: 64px;
   height: 32px;
@@ -105,16 +140,18 @@ LOGIN SIGN-IN
   align-items: center;
   position: relative;
   border-radius: 64px;
-  outline: 2px solid var(--bg-secundary);
-  color: #dfdee5;
+  outline: 2px solid var(--card);
+  color: var(--color-text);
 }
+
 .container .toggle .icon .arrow {
   position: absolute;
   left: 0;
-  background: var(--bg-secundary);
+  background: var(--card);
   border-radius: 50%;
   transition: all ease 0.75s;
 }
+
 .container .card {
   max-width: 480px;
   max-height: 360px;
@@ -123,10 +160,11 @@ LOGIN SIGN-IN
   position: relative;
   border-radius: 16px;
   padding: 0.5em;
-  background: var(--bg-secundary);
+  background: var(--card);
   overflow: hidden;
-  color: #dfdee5;
+  color: var(--color-text);
 }
+
 .container .card .content {
   width: 100%;
   height: 100%;
@@ -137,14 +175,18 @@ LOGIN SIGN-IN
   position: absolute;
   transition: all ease 1s;
 }
+
 .container .card .content .title {
+  padding: 1% 0;
   font-family: "Poppins", "Arial";
   font-weight: 600;
 }
+
 .container .card .content .fields {
   width: 100%;
   padding: 0 2em;
 }
+
 .container .card .content .fields .field {
   display: flex;
   align-items: center;
@@ -152,32 +194,35 @@ LOGIN SIGN-IN
   margin: 0.5em 0;
   padding: 1em;
   border-radius: 32px;
-  background: #1f2029;
+  background: var(--card-input);
 }
+
 .container .card .content .fields .field input {
   width: 100%;
   border: none;
   outline: none;
-
-
   background: transparent;
 }
+
 .container .card .content .submit {
   width: 100%;
   text-align: center;
   margin: 1em 0;
 }
-.container .card .content .submit .button-submit-login, .container .card .content .submit .button-submit-sign{
+
+.container .card .content .submit .button-submit-login,
+.container .card .content .submit .button-submit-sign {
   cursor: pointer;
   width: 50%;
   border: none;
   outline: none;
   padding: 1em 1.5em;
   border-radius: 1.5em;
-  box-shadow: 0 6px 12px -4px #ffffff40;
   transition: all ease 0.125s;
 }
-.container .card .content .submit .button-submit-login:hover, .container .card .content .submit .button-submit-sign:hover{
+
+.container .card .content .submit .button-submit-login:hover,
+.container .card .content .submit .button-submit-sign:hover {
   outline: 4px solid #ffffff40;
 }
 
@@ -188,21 +233,25 @@ LOGIN SIGN-IN
 
 */
 
+.verif-email-all {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
 
 .verif-email-content {
   display: block;
   width: 60%;
-  margin: 30px auto;
-  background: #1f2029;
+  margin: 12% auto;
+  background: var(--card-input);
   border-radius: 40px;
   padding: 20px;
   text-align: center;
   font-size: 36px;
   letter-spacing: 10px;
-  box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, 0.1);
 }
 
-.verif-email-text{
+.verif-email-text {
   width: 100%;
   border: none;
   outline: none;
@@ -210,4 +259,139 @@ LOGIN SIGN-IN
   text-align: center;
   letter-spacing: 10px;
 
+}
+
+
+/*
+
+  ARROW
+
+*/
+
+
+.arrowBF {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin: 2% 0;
+}
+
+.erreur-verif {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: -6% auto;
+  padding-bottom: 8%;
+}
+
+.retour,
+.suivant {
+  cursor: pointer;
+  width: 16%;
+  border: none;
+  outline: none;
+  padding: 1em 1.5em;
+  border-radius: 1.5em;
+  transition: all ease 0.125s;
+}
+
+.suivant:hover,
+.retour:hover {
+  outline: 4px solid #ffffff40;
+}
+
+
+/*
+
+    Chat Discord
+
+*/
+
+.amiDiscord {
+  max-width: 100%;
+  max-height: 100%;
+  width: 20%;
+  height: 50%;
+  position: relative;
+  border-radius: 16px;
+  padding: 0.5em;
+  background: var(--card);
+  overflow: hidden;
+  color: var(--color-text);
+}
+
+.chatDiscord {
+  max-width: 100%;
+  max-height: 100%;
+  width: 35%;
+  height: 75%;
+  position: relative;
+  border-radius: 16px;
+  padding: 0.5em;
+  background: var(--card);
+  overflow: hidden;
+  color: var(--color-text);
+}
+
+
+.chatButton{
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  border-radius: 32px;
+  background: var(--card-input);
+}
+
+
+.chat-message::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: var(--card);
+}
+
+.chat-message::-webkit-scrollbar {
+  width: 12px;
+  background-color: var(--card);
+}
+
+.chat-message::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-text);
+}
+.chat-message {
+  max-height: 88%;
+  height: 88%;
+  overflow-x: auto;
+  margin-bottom: 4%;
+}
+
+.input-message {
+  margin: 0.5em 0px 0.5em 15px;
+  padding: 1%;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.la-barre{
+  box-shadow: 0 0 0 0.2px;
+  background: var(--color-text);
+}
+
+.button-message {
+  margin: 0.5em 15px 0.5em -5px;
+  padding: 1%;
+}
+
+.envoi{
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 4%;
+}
+
+.recu{
+  display: flex;
+  padding-left: 4%;
 }
