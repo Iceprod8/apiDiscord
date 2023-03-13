@@ -304,7 +304,7 @@ LOGIN SIGN-IN
 
 /*
 
-    Chat Discord
+    Ami Discord
 
 */
 
@@ -321,6 +321,44 @@ LOGIN SIGN-IN
   color: var(--color-text);
 }
 
+.button-general{
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  color: var(--color-text);
+  width: 100%;
+  background: var(--card);
+  padding: 0.45rem;
+  border-radius: 0.45rem;
+  align-items: center;
+}
+.button-general:hover{
+  background-color: var(--card-input);
+}
+.button-user{
+  width: 100%;
+  display: flex;
+  background: var(--card);
+  padding: 0.45rem;
+  border-radius: 0.45rem;
+}
+
+.button-user:hover{
+  background-color: var(--card-input);
+}
+
+.user{
+  display: flex;
+  margin: 0 10px;
+  padding-bottom: 10px;
+}
+
+/*
+
+    Chat Discord
+
+*/
+
 .chatDiscord {
   max-width: 100%;
   max-height: 100%;
@@ -334,6 +372,13 @@ LOGIN SIGN-IN
   color: var(--color-text);
 }
 
+.chat-select{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  margin: 0px 0.45rem 0.45rem 0.45rem;
+}
 
 .chatButton{
   display: flex;
@@ -361,7 +406,7 @@ LOGIN SIGN-IN
 }
 .chat-message {
   max-height: 88%;
-  height: 88%;
+  height: 82%;
   overflow-x: auto;
   margin-bottom: 4%;
 }
@@ -387,11 +432,41 @@ LOGIN SIGN-IN
 
 .envoi{
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   padding-right: 4%;
+  margin-bottom: 10px;
+  align-items: flex-end;
+}
+
+.envoiP{
+  background: #7266ba;
+  padding: 0.55rem 1.1rem;
+  border-radius: 0.45rem;
+  max-width: 50%;
 }
 
 .recu{
   display: flex;
   padding-left: 4%;
+  margin-bottom: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.recuP{
+  background: var(--card-input);
+  padding: 0.55rem 1.1rem;
+  border-radius: 0.45rem;
+  max-width: 50%;
+}
+
+.envoi-pseudo, .recu-pseudo{
+  padding: 0 0.45rem;
+  color: var(--color-text);
+  font-weight: 600;
+}
+.envoi-date, .recu-date{
+  color: var(--color-text);
+  font-size: 15px;
+  opacity: 0.9;
 }

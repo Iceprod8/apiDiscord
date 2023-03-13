@@ -1,3 +1,13 @@
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+  hour12: false,
+}; // options pour spécifier le format de date souhaité
+
+
 // fonction pour le darkMode
 const root = document.querySelector(':root');
 document.querySelector("input[type='checkbox']#dark-toggle").addEventListener('click', function () {
@@ -213,17 +223,52 @@ socket.on('connected users', (users) => {
   // list des utilisateur connecter
   let userList = document.getElementById('utilisateur-list');
   // Effacer la liste précédente des utilisateurs connectés
-  userList.innerHTML = '';
+  userList.innerHTML = `
+  <li class="general">
+    <button onclick="selectionChat('General')" class="button-general">
+      <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 237.6 152.51">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: var(--card);
+            }
+
+            .cls-2 {
+              fill: var(--color-text);
+            }
+          </style>
+        </defs>
+        <g>
+          <path class="cls-2" d="m180.58,120.02c19.57,0,34.23-2.07,56.96-9.13.06-.82.07-1.71.07-2.92-.1-20.39-12.2-32.78-33.35-39.83-6.17,3.45-17.92,6.38-25.49,6.38s-19.31-2.92-25.48-6.38c-21.14,7.04-33.35,19.44-33.35,39.83,0,1.3.05,2.29.13,3.13,21.92,6.85,39.67,8.92,60.51,8.92Z"/>
+          <path class="cls-2" d="m178.77,0c-17.64,0-31.99,14.53-31.99,32.39s14.35,32.39,31.99,32.39,31.99-14.53,31.99-32.39S196.41,0,178.77,0Z"/>
+        </g>
+        <g>
+          <path class="cls-2" d="m60.64,120.02c19.57,0,34.22-2.07,56.96-9.13.06-.82.07-1.71.07-2.92-.1-20.39-12.2-32.78-33.35-39.83-6.17,3.45-17.92,6.38-25.49,6.38s-19.31-2.92-25.48-6.38C12.21,75.19,0,87.58,0,107.97c0,1.3.05,2.29.13,3.13,21.92,6.85,39.67,8.92,60.51,8.92Z"/>
+          <path class="cls-2" d="m58.83,0c-17.64,0-31.99,14.53-31.99,32.39s14.35,32.39,31.99,32.39,31.99-14.53,31.99-32.39S76.47,0,58.83,0Z"/>
+        </g>
+        <path class="cls-1" d="m185.88,132.18c-.11-22.77-12.95-38.68-38.17-47.33,7-7.32,11.32-17.26,11.32-28.22,0-22.41-18.05-40.64-40.23-40.64s-40.23,18.23-40.23,40.64c0,10.95,4.32,20.9,11.32,28.22-25.32,8.68-38.17,24.6-38.17,47.37,0,1.47.05,2.75.17,3.91l.52,5.45,5.22,1.63c21.13,6.6,39.37,9.29,62.97,9.29,21.27,0,36.81-2.49,59.4-9.5l5.37-1.67.4-5.61c.08-1.12.09-2.24.09-3.55Z"/>
+        <g>
+          <path class="cls-2" d="m120.61,144.27c19.57,0,34.23-2.07,56.96-9.12.06-.82.07-1.71.07-2.92-.1-20.39-12.2-32.79-33.35-39.83-6.17,3.45-17.92,6.37-25.49,6.37s-19.31-2.91-25.48-6.37c-21.14,7.04-33.35,19.44-33.35,39.83,0,1.29.05,2.29.13,3.12,21.92,6.86,39.67,8.93,60.51,8.93Z"/>
+          <path class="cls-2" d="m118.8,24.24c-17.64,0-31.99,14.53-31.99,32.4s14.35,32.39,31.99,32.39,31.99-14.53,31.99-32.39-14.35-32.4-31.99-32.4Z"/>
+        </g>
+      </svg>
+      <p class='userP'>General</p>
+    </button>
+  </li>`;
 
   // Ajouter chaque utilisateur connecté à la liste
   let userItems = users.map((user) => {
-    if (pseudoActuel === user.name) {
+    if (pseudoActuel !== user.name) {
       let listItem = document.createElement('li');
-      listItem.innerHTML = 'You';
-      return listItem;
-    } else if (pseudoActuel !== user.name) {
-      let listItem = document.createElement('li');
-      listItem.innerHTML = `<button onclick="selectionChat('${user.name}')" class="button-user">${user.name}</button>`;
+      listItem.classList.add('user')
+      listItem.innerHTML = `
+      <button onclick="selectionChat('${user.name}')" class="button-user">
+        <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571.22 685.2">
+          <path d="m116.89,151.95C123.22,68.06,197.87-6.83,295.06.5c84.77,6.37,155.36,80.87,151.58,170.25-2.15,91.26-81.18,162.09-169.37,159.7-91.77-2.47-167.66-82.14-160.38-178.49Z"/>
+          <path d="m571.22,574.75c-.04,53.79-36.99,97.27-89.9,107.58-4.74.92-9.44,1.91-14.17,2.87H104.59c-5.14-1.08-10.31-2.03-15.45-3.15-48.97-10.63-81.78-46.35-87.55-96.19-3.46-29.62-.76-59.17,3.38-88.55,3.62-25.64,9.2-50.8,19.43-74.69,13.58-31.73,32.01-59.56,63.62-76.45,19.51-10.39,40.41-15.37,62.27-14.93,6.89.12,14.17,3.66,20.46,7.09,10.15,5.53,19.59,12.3,29.38,18.47,29.62,18.63,61.71,28.71,96.95,26,25.68-1.99,49.45-10.59,71.47-23.93,7.8-4.74,15.85-9.24,22.93-14.97,17.92-14.45,37.78-14.61,58.85-9.95,40.45,8.88,68.48,33.21,87.79,69,16.32,30.22,25.12,62.79,28.95,96.55,2.83,24.92,4.14,50.17,4.14,75.25Z"/>
+        </svg>
+        <p class='userP'>${user.name}</p>
+      </button>`;
       return listItem;
     }
   });
@@ -251,29 +296,39 @@ socket.on('sync', (Allmessages) => {
   messagelist.innerHTML = '';
   console.log(Allmessages)
   let messages = Allmessages.map((message) => {
+    const dateString = message.date;
+    const dateObj = new Date(dateString);
+
+    const heure = dateObj.getUTCHours().toString().padStart(2, '0');
+    const minutes = dateObj.getUTCMinutes().toString().padStart(2, '0');
+    const jour = dateObj.getUTCDate().toString().padStart(2, '0');
+    const mois = (dateObj.getUTCMonth() + 1).toString().padStart(2, '0'); // les mois sont indexés à partir de 0
+    const annee = dateObj.getUTCFullYear().toString();
+
+    const formattedDate = `${heure}:${minutes} ${jour}/${mois}/${annee}`;
     if (message.emetteur === pseudoActuel) {
-      if(message.destinataire === chatSelect){
+      if (message.destinataire === chatSelect) {
         let listItem = document.createElement('li');
         listItem.classList.add("envoi");
-        listItem.innerHTML = `${message.content}`;
+        listItem.innerHTML = `<p class='envoi-pseudo'>${message.emetteur}</p><p class="envoiP">${message.content}</p><p class='envoi-date'>${formattedDate}</p>`;
         return listItem;
       }
     } else if (message.destinataire === chatSelect) {
       let listItem = document.createElement('li');
       listItem.classList.add("recu")
-      listItem.innerHTML = `${message.content}`;
+      listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
       return listItem;
-    } else if (message.emetteur === chatSelect){
-      if(message.destinataire === pseudoActuel){
+    } else if (message.emetteur === chatSelect) {
+      if (message.destinataire === pseudoActuel) {
         let listItem = document.createElement('li');
         listItem.classList.add("recu")
-        listItem.innerHTML = `${message.content}`;
+        listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
         return listItem;
       }
     }
   });
   messages.forEach((item) => {
-    if(item !== undefined){
+    if (item !== undefined) {
       messagelist.appendChild(item);
     }
   });
@@ -284,6 +339,8 @@ socket.on('sync', (Allmessages) => {
 function selectionChat(pseudo) {
   chatSelect = pseudo;
   socket.emit('syncMessage', chatSelect)
+  var chat = document.getElementById('chat-select')
+  chat.innerHTML = `@${pseudo}`
 }
 
 /*
@@ -309,12 +366,22 @@ function mes() {
 socket.on('message', (data) => {
   var messages = document.getElementById('messages')
   let listItem = document.createElement('li');
+  const dateString = data.date;
+  const dateObj = new Date(dateString);
+
+  const heure = dateObj.getUTCHours().toString().padStart(2, '0');
+  const minutes = dateObj.getUTCMinutes().toString().padStart(2, '0');
+  const jour = dateObj.getUTCDate().toString().padStart(2, '0');
+  const mois = (dateObj.getUTCMonth() + 1).toString().padStart(2, '0'); // les mois sont indexés à partir de 0
+  const annee = dateObj.getUTCFullYear().toString();
+
+  const formattedDate = `${heure}:${minutes} ${jour}/${mois}/${annee}`;
   if (data.emetteur === pseudoActuel) {
     listItem.classList.add("envoi")
-    listItem.innerHTML = data.content;
+    listItem.innerHTML = `<p class='envoi-pseudo'>${data.emetteur}</p><p class="envoiP">${data.content}</p><p class='envoi-date'>${formattedDate}</p>`;
   } else if (data.destinataire === chatSelect) {
     listItem.classList.add("recu")
-    listItem.innerHTML = data.content;
+    listItem.innerHTML = `<p class='recu-pseudo'>${data.emetteur}</p><p class="recuP">${data.content}</p><p class='recu-date'>${formattedDate}</p>`;
   }
   messages.appendChild(listItem);
 });
