@@ -142,7 +142,7 @@ signSubmit.addEventListener('click', (e) => {
             //bouton pour valider l'entre
             var suivant = document.getElementById('next')
             //bouton pour retourner en arriere
-            var retour = document.getElementById('retour')
+            var retour = document.getElementById('back')
             // message pour dire que le code n'est pas le bon ou que l'adresse mail n'existe pas
             var erreurVerif = document.getElementById('erreur-verif')
 
@@ -164,6 +164,10 @@ signSubmit.addEventListener('click', (e) => {
                 erreurVerif.innerText = "Incorrect code or email does not exist"
               }
             });
+
+            retour.addEventListener('click', function () {
+              location.reload();
+            })
           })
         } else {
           signErreur.innerText = "Email already use "
@@ -258,9 +262,9 @@ socket.on('connected users', (users) => {
 
   // Ajouter chaque utilisateur connecté à la liste
   let userItems = users.map((user) => {
-    if (pseudoActuel === user.name){
+    if (pseudoActuel === user.name) {
       return null;
-    }else if (pseudoActuel !== user.name) {
+    } else if (pseudoActuel !== user.name) {
       let listItem = document.createElement('li');
       listItem.classList.add('user')
       listItem.innerHTML = `
@@ -275,7 +279,7 @@ socket.on('connected users', (users) => {
     }
   });
   userItems.forEach((item) => {
-    if(item !== null){
+    if (item !== null) {
       userList.appendChild(item);
     }
   });
@@ -320,7 +324,7 @@ socket.on('sync', (Allmessages) => {
       listItem.classList.add("recu")
       listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
       return listItem;
-    } else if (message.destinataire === chatSelect && chatSelect === 'General'){
+    } else if (message.destinataire === chatSelect && chatSelect === 'General') {
       let listItem = document.createElement('li');
       listItem.classList.add("recu");
       listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
