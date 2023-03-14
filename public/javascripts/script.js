@@ -151,7 +151,7 @@ signSubmit.addEventListener('click', (e) => {
             suivant.addEventListener('click', (e) => {
               e.preventDefault();
               if (codeEmail.value == code) {
-                pseudoActuel = valide.pseudo
+                pseudoActuel = SignObjet.pseudo
                 // Supprimez l'élément de la page
                 parentLogSign.remove();
                 // ajout de l'application du chat
@@ -258,7 +258,9 @@ socket.on('connected users', (users) => {
 
   // Ajouter chaque utilisateur connecté à la liste
   let userItems = users.map((user) => {
-    if (pseudoActuel !== user.name) {
+    if (pseudoActuel === user.name){
+      return null;
+    }else if (pseudoActuel !== user.name) {
       let listItem = document.createElement('li');
       listItem.classList.add('user')
       listItem.innerHTML = `
@@ -273,7 +275,9 @@ socket.on('connected users', (users) => {
     }
   });
   userItems.forEach((item) => {
-    userList.appendChild(item);
+    if(item !== null){
+      userList.appendChild(item);
+    }
   });
 });
 
@@ -306,25 +310,21 @@ socket.on('sync', (Allmessages) => {
     const annee = dateObj.getUTCFullYear().toString();
 
     const formattedDate = `${heure}:${minutes} ${jour}/${mois}/${annee}`;
-    if (message.emetteur === pseudoActuel) {
-      if (message.destinataire === chatSelect) {
-        let listItem = document.createElement('li');
-        listItem.classList.add("envoi");
-        listItem.innerHTML = `<p class='envoi-pseudo'>${message.emetteur}</p><p class="envoiP">${message.content}</p><p class='envoi-date'>${formattedDate}</p>`;
-        return listItem;
-      }
-    } else if (message.destinataire === chatSelect) {
+    if (message.emetteur === pseudoActuel && message.destinataire === chatSelect) {
+      let listItem = document.createElement('li');
+      listItem.classList.add("envoi");
+      listItem.innerHTML = `<p class='envoi-pseudo'>${message.emetteur}</p><p class="envoiP">${message.content}</p><p class='envoi-date'>${formattedDate}</p>`;
+      return listItem;
+    } else if (message.emetteur === chatSelect && message.destinataire === pseudoActuel) {
       let listItem = document.createElement('li');
       listItem.classList.add("recu")
       listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
       return listItem;
-    } else if (message.emetteur === chatSelect) {
-      if (message.destinataire === pseudoActuel) {
-        let listItem = document.createElement('li');
-        listItem.classList.add("recu")
-        listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
-        return listItem;
-      }
+    } else if (message.destinataire === chatSelect && chatSelect === 'General'){
+      let listItem = document.createElement('li');
+      listItem.classList.add("recu");
+      listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
+      return listItem;
     }
   });
   messages.forEach((item) => {
