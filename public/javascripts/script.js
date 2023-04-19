@@ -30,6 +30,7 @@ var socket = io();
 var pseudoActuel = ''
 var chatSelect = 'General';
 
+let utilisateurBloquer = []
 
 
 /*
@@ -268,13 +269,18 @@ socket.on('connected users', (users) => {
       let listItem = document.createElement('li');
       listItem.classList.add('user')
       listItem.innerHTML = `
-      <button onclick="selectionChat('${user.name}')" class="button-user">
-        <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571.22 685.2">
-          <path d="m116.89,151.95C123.22,68.06,197.87-6.83,295.06.5c84.77,6.37,155.36,80.87,151.58,170.25-2.15,91.26-81.18,162.09-169.37,159.7-91.77-2.47-167.66-82.14-160.38-178.49Z"/>
-          <path d="m571.22,574.75c-.04,53.79-36.99,97.27-89.9,107.58-4.74.92-9.44,1.91-14.17,2.87H104.59c-5.14-1.08-10.31-2.03-15.45-3.15-48.97-10.63-81.78-46.35-87.55-96.19-3.46-29.62-.76-59.17,3.38-88.55,3.62-25.64,9.2-50.8,19.43-74.69,13.58-31.73,32.01-59.56,63.62-76.45,19.51-10.39,40.41-15.37,62.27-14.93,6.89.12,14.17,3.66,20.46,7.09,10.15,5.53,19.59,12.3,29.38,18.47,29.62,18.63,61.71,28.71,96.95,26,25.68-1.99,49.45-10.59,71.47-23.93,7.8-4.74,15.85-9.24,22.93-14.97,17.92-14.45,37.78-14.61,58.85-9.95,40.45,8.88,68.48,33.21,87.79,69,16.32,30.22,25.12,62.79,28.95,96.55,2.83,24.92,4.14,50.17,4.14,75.25Z"/>
-        </svg>
-        <p class='userP'>${user.name}</p>
-      </button>`;
+      <div id="chatbutton-${user.name}">
+        <button class="button-user" onclick="selectionChat('${user.name}')">
+          <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571.22 685.2">
+            <path d="m116.89,151.95C123.22,68.06,197.87-6.83,295.06.5c84.77,6.37,155.36,80.87,151.58,170.25-2.15,91.26-81.18,162.09-169.37,159.7-91.77-2.47-167.66-82.14-160.38-178.49Z"/>
+            <path d="m571.22,574.75c-.04,53.79-36.99,97.27-89.9,107.58-4.74.92-9.44,1.91-14.17,2.87H104.59c-5.14-1.08-10.31-2.03-15.45-3.15-48.97-10.63-81.78-46.35-87.55-96.19-3.46-29.62-.76-59.17,3.38-88.55,3.62-25.64,9.2-50.8,19.43-74.69,13.58-31.73,32.01-59.56,63.62-76.45,19.51-10.39,40.41-15.37,62.27-14.93,6.89.12,14.17,3.66,20.46,7.09,10.15,5.53,19.59,12.3,29.38,18.47,29.62,18.63,61.71,28.71,96.95,26,25.68-1.99,49.45-10.59,71.47-23.93,7.8-4.74,15.85-9.24,22.93-14.97,17.92-14.45,37.78-14.61,58.85-9.95,40.45,8.88,68.48,33.21,87.79,69,16.32,30.22,25.12,62.79,28.95,96.55,2.83,24.92,4.14,50.17,4.14,75.25Z"/>
+          </svg>
+          <p class='userP'>${user.name}</p>
+        </button>
+        </div>
+        <div id="${user.name}">
+          <button onclick="bloque('${user.name}')">Bloquer</button>
+        </div>`;
       return listItem;
     }
   });
@@ -319,12 +325,12 @@ socket.on('sync', (Allmessages) => {
       listItem.classList.add("envoi");
       listItem.innerHTML = `<p class='envoi-pseudo'>${message.emetteur}</p><p class="envoiP">${message.content}</p><p class='envoi-date'>${formattedDate}</p>`;
       return listItem;
-    } else if (message.emetteur === chatSelect && message.destinataire === pseudoActuel) {
+    } else if (message.emetteur === chatSelect && message.destinataire === pseudoActuel && !utilisateurBloquer.includes(message.emetteur)) {
       let listItem = document.createElement('li');
       listItem.classList.add("recu")
       listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
       return listItem;
-    } else if (message.destinataire === chatSelect && chatSelect === 'General') {
+    } else if (message.destinataire === chatSelect && chatSelect === 'General' && !utilisateurBloquer.includes(message.emetteur)) {
       let listItem = document.createElement('li');
       listItem.classList.add("recu");
       listItem.innerHTML = `<p class='recu-pseudo'>${message.emetteur}</p><p class="recuP">${message.content}</p><p class='recu-date'>${formattedDate}</p>`;
@@ -380,15 +386,70 @@ socket.on('message', (data) => {
   const annee = dateObj.getUTCFullYear().toString();
 
   const formattedDate = `${heure}:${minutes} ${jour}/${mois}/${annee}`;
-  if (data.emetteur === pseudoActuel) {
+  if (data.emetteur === pseudoActuel && !utilisateurBloquer.includes(data.emetteur)) {
     listItem.classList.add("envoi")
     listItem.innerHTML = `<p class='envoi-pseudo'>${data.emetteur}</p><p class="envoiP">${data.content}</p><p class='envoi-date'>${formattedDate}</p>`;
-  } else if (data.destinataire === chatSelect) {
+  } else if (data.destinataire === chatSelect && !utilisateurBloquer.includes(data.emetteur)) {
     listItem.classList.add("recu")
     listItem.innerHTML = `<p class='recu-pseudo'>${data.emetteur}</p><p class="recuP">${data.content}</p><p class='recu-date'>${formattedDate}</p>`;
   }
   messages.appendChild(listItem);
 });
+
+
+// gestion des bloquage
+
+function bloque(utilisateur) {
+  const conf = confirm('Est tu sur de bloquer cette personne ?', '')
+  if (conf) {
+    const barrer = document.getElementById(`chatbutton-${utilisateur}`)
+    barrer.innerHTML =
+      `<button class="button-user" onclick="selectionChat('${utilisateur}')">
+      <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571.22 685.2">
+        <path d="m116.89,151.95C123.22,68.06,197.87-6.83,295.06.5c84.77,6.37,155.36,80.87,151.58,170.25-2.15,91.26-81.18,162.09-169.37,159.7-91.77-2.47-167.66-82.14-160.38-178.49Z"/>
+        <path d="m571.22,574.75c-.04,53.79-36.99,97.27-89.9,107.58-4.74.92-9.44,1.91-14.17,2.87H104.59c-5.14-1.08-10.31-2.03-15.45-3.15-48.97-10.63-81.78-46.35-87.55-96.19-3.46-29.62-.76-59.17,3.38-88.55,3.62-25.64,9.2-50.8,19.43-74.69,13.58-31.73,32.01-59.56,63.62-76.45,19.51-10.39,40.41-15.37,62.27-14.93,6.89.12,14.17,3.66,20.46,7.09,10.15,5.53,19.59,12.3,29.38,18.47,29.62,18.63,61.71,28.71,96.95,26,25.68-1.99,49.45-10.59,71.47-23.93,7.8-4.74,15.85-9.24,22.93-14.97,17.92-14.45,37.78-14.61,58.85-9.95,40.45,8.88,68.48,33.21,87.79,69,16.32,30.22,25.12,62.79,28.95,96.55,2.83,24.92,4.14,50.17,4.14,75.25Z"/>
+      </svg>
+      <p class='userP'>
+        <strike>${utilisateur}</strike>
+      </p>
+    </button>`
+    const user = document.getElementById(`${utilisateur}`)
+    user.innerHTML = `<button onclick="debloque('${utilisateur}')">Débloquer</button>`
+    console.log(utilisateur + ' bloquer')
+    utilisateurBloquer.push(utilisateur)
+  } else {
+    console.log("erreur")
+  }
+}
+
+function debloque(utilisateur) {
+  const conf = confirm('Est tu sur de débloquer cette personne ?', '')
+  if (conf) {
+    const barrer = document.getElementById(`chatbutton-${utilisateur}`)
+    barrer.innerHTML =
+      `<button class="button-user" onclick="selectionChat('${utilisateur}')">
+      <svg style="height: 25px;margin: 0 10px 0px 0px;fill: var(--color-text);" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 571.22 685.2">
+        <path d="m116.89,151.95C123.22,68.06,197.87-6.83,295.06.5c84.77,6.37,155.36,80.87,151.58,170.25-2.15,91.26-81.18,162.09-169.37,159.7-91.77-2.47-167.66-82.14-160.38-178.49Z"/>
+        <path d="m571.22,574.75c-.04,53.79-36.99,97.27-89.9,107.58-4.74.92-9.44,1.91-14.17,2.87H104.59c-5.14-1.08-10.31-2.03-15.45-3.15-48.97-10.63-81.78-46.35-87.55-96.19-3.46-29.62-.76-59.17,3.38-88.55,3.62-25.64,9.2-50.8,19.43-74.69,13.58-31.73,32.01-59.56,63.62-76.45,19.51-10.39,40.41-15.37,62.27-14.93,6.89.12,14.17,3.66,20.46,7.09,10.15,5.53,19.59,12.3,29.38,18.47,29.62,18.63,61.71,28.71,96.95,26,25.68-1.99,49.45-10.59,71.47-23.93,7.8-4.74,15.85-9.24,22.93-14.97,17.92-14.45,37.78-14.61,58.85-9.95,40.45,8.88,68.48,33.21,87.79,69,16.32,30.22,25.12,62.79,28.95,96.55,2.83,24.92,4.14,50.17,4.14,75.25Z"/>
+      </svg>
+      <p class='userP'>${utilisateur}</p>
+    </button>`
+    const user = document.getElementById(`${utilisateur}`)
+    user.innerHTML = `<button onclick="bloque('${utilisateur}')">bloquer</button>`
+    console.log(utilisateur + ' debloquer')
+    utilisateurBloquer.shift(utilisateur)
+  } else {
+    console.log("erreur")
+  }
+}
+
+
+
+
+
+
+
+
 
 // gestion de la deconnection
 socket.on('disconnect', () => {

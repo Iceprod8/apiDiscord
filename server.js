@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   password: String,
   inscription: Date,
   lastConnexion: Date,
+  bloque: String,
 });
 const User = mongoose.model('User', userSchema);
 
@@ -200,7 +201,8 @@ io.on('connection', (socket) => {
           {
             pseudo: user.pseudo,
             email: user.email,
-            password: hash
+            password: hash,
+            bloque: "",
           },
           {
             $setOnInsert: { inscription: today },
@@ -263,6 +265,26 @@ io.on('connection', (socket) => {
       });
   })
 
+  /*
+
+    bloquer
+
+  */
+
+    socket.on('bloque', user => {
+      User.updateOne({pseudo: user.pseudo},{$set:{bloque: user.bloque}})
+      Message.find({
+        $or: [
+          { emetteur: pseudo },
+          { destinataire: pseudo }
+        ]
+      }).then((chat) => {
+        console.log(chat)
+        socket.emit('sync', chat)
+      }).catch((err) => {
+        console.error(err);
+      });
+    })
   /*
 
     Service d'envoie de message
